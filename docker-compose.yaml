@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+
+  airflow-init:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+    entrypoint: /bin/bash
+    command: >
+      -c "airflow db init &&
+          airflow users create --username dermanow --password admin --firstname Derman --lastname Now --role Admin --email dermanow@example.com"
+
+  airflow-webserver:
+    build: .
+    depends_on:
+      - postgres
+      - airflow-init
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+    command: webserver
+
+  airflow-scheduler:
+    build: .
+    depends_on:
+      - postgres
+      - airflow-init
+    restart: always
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/opt/airflow/data
+    command: scheduler
