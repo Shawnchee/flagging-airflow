@@ -33,12 +33,9 @@ This project provides a robust pipeline for monitoring blockchain transactions a
 
 ## 🏗️ Architecture
 
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐  
-│  Transaction    │     │  Suspicious     │     │                 │
-│  Data Source    │──►  │  Transaction    │──►  │  Supabase       │ 
-│  (Blockchain)   │     │  Detection      │     │  Storage        │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-        Fetch               Process                 Store
+<p align="center">
+  <img src="processairflow.png" alt="Airflow Logo" />
+</p>
 
 ## 💻 Usage
 
