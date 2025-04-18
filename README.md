@@ -8,6 +8,10 @@
 
 An automated system for monitoring blockchain transactions and flagging suspicious activities using Apache Airflow and Supabase.
 
+<p align="center">
+  <img src="airflow.png" alt="Airflow Logo" />
+</p>
+
 ---
 
 ## 📋 Overview
