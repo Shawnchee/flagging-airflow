@@ -45,12 +45,43 @@ This project provides a robust pipeline for monitoring blockchain transactions a
 
 ---
 
+## 🚀 Deployment Guide
+
+Follow these steps to deploy the Blockchain Transaction Monitoring System:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Shawnchee/flagging-airflow.git
+   cd flagging-airflow
+   ```
+
+2. **Set Up Environment Variables**:
+   - Create a `.env` file in the root directory.
+   - Add the required environment variables for Supabase and Airflow.
+
+3. **Build and Start Docker Containers**:
+   ```bash
+   docker-compose up --build
+   ```
+
+4. **Access the Airflow UI**:
+   - Open your browser and navigate to `http://localhost:8080`.
+   - Log in using the default credentials (configured in the `docker-compose.yml` file).
+
+5. **Enable the DAG**:
+   - In the Airflow UI, enable the `suspicious_txn_monitor` DAG to start monitoring transactions.
+
+6. **Monitor Logs**:
+   - Use the Airflow UI or `docker logs` to monitor the pipeline's execution.
+
+---
+
 ## 🧐 Detection Rules
 
-### 🚩 Large Transaction Value
-- Transactions with a value greater than **50 ETH** are flagged as suspicious.
+### 🚩 Flagging Service Providers
+- Service providers holding funds in their wallets for **more than 30 days** are flagged as suspicious.
 
-### ⚡ Frequent Transactions
-- Transactions that occur within **10 seconds** of each other are flagged as suspicious.
+### ⚡ Suspicious Document Uploads
+- Charities that upload **malformed or suspicious documents** during registration are flagged for review.
 
 
